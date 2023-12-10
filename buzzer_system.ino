@@ -8,6 +8,7 @@ int buzzer = 9;
 int lock = 0;
 unsigned long lastBlink = 0;
 unsigned long time = 0;
+int blinkState = LOW;
 
 
 // the setup routine runs once when you press reset:
@@ -34,7 +35,15 @@ void loop() {
         tone(buzzer, 1320, 200);
         lock++;
         } else if (lock == 1) {
-            
+            lastBlink = time;
+            if (time - lastBlink >= blinkInterval) {
+                if (blinkState == HIGH) {
+                    digitalWrite(led1, LOW);
+
+                } else if (blinkState == LOW) {
+                    digitalWrite(led1, HIGH);
+                }
+            }
         }
     } else if (val2 == 0) {
         if (lock == 0) {
